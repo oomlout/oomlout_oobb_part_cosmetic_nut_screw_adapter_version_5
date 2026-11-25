@@ -13,6 +13,12 @@ Outside diameter **14 mm** · overall height **8 mm**.
 3. Seat the hex nut in the pocket and thread an M6 screw in from below. The pocket is 5 mm deep. The 5.2 mm example nut stands 0.2 mm proud and lifts the cap by that amount.
 4. Check that the fastener clears the underside of the cap roof. Press the cap over the flange with its open end toward the plate.
 
+## Using an M6 hex-head bolt
+
+The same M6 nut adapter also captures an M6 hex-head bolt with a 10 mm head across the flats. Feed the shank through the pocket and plate, align the head flats and seat the head. Tighten an M6 nut on the reverse side and press the cap over the bolt head.
+
+![M6 bolt head above and seated in the nut adapter](../oobb_part_cosmetic_adapter_m6_nut_12_mm_diameter_7_mm_depth_to_m6/bolt_head.png)
+
 ![Exploded installation with full-detail M6 hex nut hardware](../oobb_part_cosmetic_adapter_m6_nut_12_mm_diameter_7_mm_depth_to_m6/installation.png)
 
 The black flange rests on the teal plate. The yellow cap covers the exposed flange. The same fastener takes the same cap in either mounting version.

@@ -14,6 +14,7 @@ from PIL import Image, ImageDraw
 import trimesh
 
 from p1s_print_kit import add_printable_copy
+from working_oomp_populate import PROJECT_TITLE
 
 
 CORE = "http://schemas.microsoft.com/3dmanufacturing/core/2015/02"
@@ -62,7 +63,7 @@ def main(**kwargs):
         model.attrib.pop("requiredextensions", None)
         for entry in model.findall(f"{{{CORE}}}metadata"):
             if entry.get("name") == "Title":
-                entry.text = f"OOBB cosmetic adapters and caps - {mounting}"
+                entry.text = f"{PROJECT_TITLE} - {mounting.replace('_', ' ')}"
             elif entry.get("name") not in ("Application", "BambuStudio:3mfVersion", "Thumbnail_Middle", "Thumbnail_Small"):
                 model.remove(entry)
         resources = model.find(f"{{{CORE}}}resources")

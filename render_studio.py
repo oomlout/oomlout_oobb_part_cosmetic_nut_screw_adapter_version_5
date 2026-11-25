@@ -125,6 +125,13 @@ def adapter(part, x, z):
     place(part["id"], black, x, z + (d["body_depth"] if flipped else 0), flipped)
 
 
+backing_adapter = next(part for part in job["parts"] if all(
+    part["details"][key] == value for key, value in (
+        ("mounting", "to_flat"), ("size", "m3"), ("fastener_type", "nut"), ("oobb_type", "adapter")
+    )
+))
+
+
 def joint(part, cap, x=0, stage=5, spread=False):
     d = part["details"]
     h = d["body_depth"]
@@ -136,17 +143,15 @@ def joint(part, cap, x=0, stage=5, spread=False):
     if stage >= 3:
         if nut:
             place(example["hardware"], silver, x, h - d["seat_depth"] + (33 if spread else 0))
-            washer = d["size"] == "m3"
-            if washer:
-                place("hardware_washer_m3_penny", silver, x, -15 if spread else -3.8)
-            place(example["counterpart"], silver, x, -24 if spread else 5 - (0.8 if washer else 0), True)
+            place(example["counterpart"], silver, x, -24 if spread else 5, True)
         else:
-            screw_length = 16 if is_wood else 8
+            screw_length = 16 if is_wood else 10
             recess = 2.17 if is_wood else 0.84
             place(example["hardware"], gold if is_wood else silver, x, h - recess - screw_length + (39 if spread else 0))
     if not nut and not is_wood:
-        place("hardware_washer_m3_penny", silver, x, -15 if spread or stage < 3 else -3.8)
-        place("hardware_nut_m3", silver, x, -27 if spread or stage < 3 else -6.2)
+        show_backing = spread or stage == 1
+        place(backing_adapter["id"], black, x, -16 if show_backing else -3, flip=True)
+        place("hardware_nut_m3", silver, x, -30 if show_backing else -5, flip=True)
     if is_wood:
         bpy.ops.mesh.primitive_cube_add(size=1, location=(x, 0, -24 if spread else -11))
         block = bpy.context.object
@@ -174,6 +179,16 @@ for part in job["parts"]:
     place("plate", plate_material, z=-3, turn=math.pi / 2)
     joint(part, cap, spread=True)
     render(folder / "installation.png", eye=(0.26, -1.4, 0.43), portrait=True)
+    if d["size"] == "m6" and d["fastener_type"] == "nut":
+        # Show the exploded joint beside the bolt head seated in the same pocket.
+        place("plate", plate_material, z=-3)
+        for x, exploded in ((-15, True), (15, False)):
+            adapter(part, x, 12 if exploded else 0)
+            floor_z = d["body_depth"] - d["seat_depth"]
+            place(part["example"]["bolt_head_example"], silver, x, 28 if exploded else floor_z - 12)
+            place("hardware_nut_m6", silver, x, -23 if exploded else -3, flip=True)
+        place(cap["id"], yellow, -15, 60, flip=True)
+        render(folder / "bolt_head.png", eye=(0.20, -1.3, 0.63), portrait=True)
     if d["fastener_type"] == "countersunk":
         kit = root / "output" / ("basic_set_" + d["mounting"])
         nut_part = next(p for p in job["parts"] if p["details"]["mounting"] == d["mounting"]

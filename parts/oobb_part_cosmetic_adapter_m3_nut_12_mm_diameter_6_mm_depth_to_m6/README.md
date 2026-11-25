@@ -10,7 +10,7 @@ Outside diameter **12 mm** · overall height **6 mm**.
 
 1. Choose the adapter and cap for the same fastener. Check the screw length against the plate, adapter and available thread or backing.
 2. Insert the 5.75 mm locating sleeve into the clearance hole until the flange touches the plate.
-3. Align the nut flats with the pocket and press the nut onto its floor. Thread an M3 screw in from the reverse side. The illustrated 8 mm screw uses a 9 mm OD, 0.8 mm thick washer under its head on a 3 mm plate.
+3. Align the M3 nut with the hex pocket and seat it against the floor. Insert the M3 screw from the other face of the plate and tighten. If you cap the nut side, check the screw tip clears the roof.
 4. Check that the fastener clears the underside of the cap roof. Press the cap over the flange with its open end toward the plate.
 
 ![Exploded installation with full-detail M3 hex nut hardware](installation.png)

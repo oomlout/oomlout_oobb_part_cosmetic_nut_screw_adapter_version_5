@@ -13,7 +13,7 @@ from reportlab.lib.pagesizes import A4, landscape
 from reportlab.lib.utils import ImageReader, simpleSplit
 from reportlab.pdfgen.canvas import Canvas
 
-from working_oomp_populate import example_steps, get_mountings, get_usage
+from working_oomp_populate import PROJECT_ID, PROJECT_TITLE, example_steps, get_mountings, get_usage
 from working_navigation import hardware_link, write_page
 
 
@@ -70,19 +70,24 @@ def book(**kwargs):
     records = kwargs["records"]
     mounting = kwargs["mounting"]
     title = get_mountings()[mounting]["title"]
-    project = "oomlout_oobb_part_cosmetic_nut_screw_adapter"
     kit = root / "output" / ("basic_set_" + mounting)
     folder = kit / "assembly"
     pdf = folder / "assembly_instructions.pdf"
     width, height = landscape(A4)
     c = Canvas(str(pdf), pagesize=(width, height), invariant=True)
-    c.setTitle(f"OOBB cosmetic adapters | {title}")
+    c.setTitle(f"{PROJECT_TITLE} | {title}")
     c.setAuthor("Oomlout")
     examples = get_usage()
     selected = [r for r in records if r["taxonomy_9"] == mounting]
     folders = {
         (r["taxonomy_5"], r["taxonomy_6"], r["taxonomy_4"]): root / "parts" / r["oomp_id"] for r in selected
     }
+    backing = next(
+        root / "parts" / record["oomp_id"]
+        for record in records
+        if (record["taxonomy_9"], record["taxonomy_5"], record["taxonomy_6"], record["taxonomy_4"])
+        == ("to_flat", "m3", "nut", "adapter")
+    )
     source = root / "source_file"
     logo = ET.parse(source / "oomlout-LOGO-unshaded-vector.svg").getroot()
     path = logo.find(".//{*}path").get("d")
@@ -116,10 +121,11 @@ def book(**kwargs):
         c.drawImage(badge, 40, height - 77, 60, 35, mask="auto")
 
     cover_border()
-    type_line("OOBB cosmetic adapters", 39, height - 135, "Helvetica-Bold", 38)
+    type_line(PROJECT_TITLE, 39, height - 135, "Helvetica-Bold", 30)
     type_line(f"{title} mounting   /   Four fastener styles", 41, height - 168, size=20)
     image(kit / "assembled.png", 40, 84, width - 80, height - 270)
-    type_line(project, 40, 57, "Courier", 10)
+    type_line(PROJECT_ID, 40, 57, "Courier", 10)
+    c.linkURL(f"https://github.com/oomlout/{PROJECT_ID}", (40, 55, 40 + len(PROJECT_ID) * 6, 67))
     type_line("Assembly booklet   /   editable P1S print set", 40, 39, size=10)
     c.showPage()
 
@@ -129,7 +135,9 @@ def book(**kwargs):
         ("Choose the mounting", get_mountings()[mounting]["description"]),
         (
             "Print the set",
-            "The P1S plate supplies five copies of each adapter and cap. Print the caps closed face down. A sleeved adapter prints with its locating sleeve pointing up.",
+            "Print caps closed face down and sleeved adapters sleeve up. " +
+            ("Print one extra To flat M3 nut adapter for the back of the 3 mm plate. Opposed sleeves would meet inside the hole."
+             if mounting == "to_m6" else "Use a flat M3 nut adapter from the set to hold the backing nut."),
         ),
         (
             "Check the joint",
@@ -143,7 +151,7 @@ def book(**kwargs):
         type_line(heading, 32, y, "Helvetica-Bold", 17)
         y = paragraph(text, 32, y - 21, 393, size=11.5, leading=15) - 18
     image(kit / "exploded.png", 441, 93, width - 472, height - 167)
-    paragraph("M3 screw, washer and nut at left. M6 nut and hex-head bolt at right.", 449, 77, width - 490, 10, 12)
+    paragraph("Left: M3 screw with nut and backing adapter. Right: M6 nut with hex-head bolt.", 449, 77, width - 490, 10, 12)
     paragraph(
         "AI-generated CAD images and instructions. Errors possible. Physical fit has not been tested.",
         32,
@@ -159,7 +167,7 @@ def book(**kwargs):
     additions = [
         [
             (source / "previews/plate.png", "OOBB plate"),
-            (source / "previews/hardware_washer_m3_penny.png", "hardware_washer_m3_penny"),
+            (backing / "studio.png", "M3 nut adapter"),
             (source / "previews/hardware_nut_m3.png", "hardware_nut_m3"),
         ],
         [(folders["m3", "countersunk", "adapter"] / "studio.png", "Adapter")],
@@ -187,7 +195,7 @@ def book(**kwargs):
 
     for page, category, choices in [
         (4, "Hex nut seats", [("m3", "nut"), ("m6", "nut")]),
-        (5, "Countersunk seats", [("m3", "countersunk"), ("m3_5", "screw_wood")]),
+        (6, "Countersunk seats", [("m3", "countersunk"), ("m3_5", "screw_wood")]),
     ]:
         header(category, page)
         for i, key in enumerate(choices):
@@ -202,11 +210,21 @@ def book(**kwargs):
             type_line(label, x, 43, "Courier", 11)
             c.linkURL("https://" + label, (x, 39, x + 125, 56))
         c.showPage()
+        if page == 4:
+            example = examples["m6", "nut"]
+            header("Capture an M6 bolt head", 5)
+            image(folders["m6", "nut", "adapter"] / "bolt_head.png", 30, 43, 415, height - 123)
+            type_line("Bolt head in the pocket", 467, height - 126, "Helvetica-Bold", 19)
+            y = paragraph(example["bolt_head_seat"], 467, height - 157, 325)
+            y = paragraph("The full-detail example uses an M6 × 12 mm hex-head bolt on a 3 mm plate. Its 4 mm head sits inside the 5 mm pocket.", 467, y - 21, 325)
+            type_line("Full-detail M6 bolt model", 467, y - 22, "Helvetica", 11)
+            c.linkURL(hardware_link(example["bolt_head_example"]), (467, y - 26, 590, y - 10))
+            c.showPage()
 
-    header("5   Completed assembly", 6)
+    header("Completed assembly", 7)
     image(folder / "finished.png", 40, 75, width - 80, height - 160)
     paragraph(
-        "The cap covers the seated screw. The washer and nut retain the joint on the reverse side.",
+        "The cap covers the screw head. The flat M3 nut adapter holds the nut on the reverse side.",
         32,
         42,
         width - 68,
@@ -214,7 +232,7 @@ def book(**kwargs):
     )
     c.showPage()
 
-    header("One M3 countersunk joint", 7)
+    header("One M3 countersunk joint", 8)
     inventory = []
 
     def item(label, identity, thumb, purchased):
@@ -232,6 +250,7 @@ def book(**kwargs):
     for kind in ("adapter", "cap"):
         part = folders["m3", "countersunk", kind]
         thumbnails.append(item("M3 countersunk " + kind, part.name, part / "studio.png", False))
+    thumbnails.append(item("To flat M3 nut adapter", backing.name, backing / "studio.png", False))
     thumbnails.append(
         item(
             "3 x 3 OOBB plate, 3 mm",
@@ -241,8 +260,7 @@ def book(**kwargs):
         )
     )
     for label, identity in [
-        ("M3 x 8 mm countersunk PZ", examples["m3", "countersunk"]["hardware"]),
-        ("M3 wide washer, 9 mm OD", "hardware_washer_m3_penny"),
+        ("M3 x 10 mm countersunk PZ", examples["m3", "countersunk"]["hardware"]),
         ("M3 hex nut", "hardware_nut_m3"),
     ]:
         thumbnails.append(item(label, identity, source / "previews" / (identity + ".png"), True))
@@ -250,10 +268,10 @@ def book(**kwargs):
         y = 294 if group == 0 else 47
         c.rect(29, y, width - 58, 220)
         type_line(label, 40, y + 194, "Helvetica-Bold", 15)
-        for j in range(3):
-            i = group * 3 + j
-            x = 40 + j * (width - 82) / 3
-            image(thumbnails[i], x, y + 50, (width - 112) / 3, 133)
+        indices = range(4) if group == 0 else range(4, len(inventory))
+        for j, i in enumerate(indices):
+            x = 40 + j * (width - 82) / len(indices)
+            image(thumbnails[i], x, y + 50, (width - 112) / len(indices), 133)
             row = inventory[i]
             type_line(row["name"], x, y + 32, "Helvetica-Bold", 12)
             if row["md5_6_alpha"]:
@@ -276,12 +294,13 @@ def book(**kwargs):
         "Preparation",
         "Steps 1-4",
         "Hex nut seats",
+        "M6 bolt head",
         "Countersunk seats",
         "Completed assembly",
         "Parts list",
         "Back cover",
     ]
-    kinds = ["cover", "details", "instructions", "details", "details", "summary", "parts", "back"]
+    kinds = ["cover", "details", "instructions", "details", "details", "details", "summary", "parts", "back"]
     with fitz.open(pdf) as doc:
         for i, page in enumerate(doc):
             key = f"page-{i+1:02d}"
@@ -319,7 +338,7 @@ def book(**kwargs):
         "step_count": 4,
     }
     template = (source / "assembly_page_viewer.html").read_text(encoding="utf-8")
-    html = template.replace("__TITLE__", f"{title} | OOBB assembly").replace(
+    html = template.replace("__TITLE__", f"{title} | {PROJECT_TITLE}").replace(
         "__PROJECT_URL__", "../README.md"
     )
     (folder / "assembly_instructions.html").write_text(

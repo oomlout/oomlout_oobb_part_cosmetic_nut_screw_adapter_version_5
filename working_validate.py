@@ -13,6 +13,7 @@ import numpy as np
 import trimesh
 
 from p1s_print_kit import validate_editable_copies
+from working_oomp_populate import PROJECT_ID, PROJECT_TITLE
 
 
 def main(**kwargs):
@@ -47,6 +48,8 @@ def main(**kwargs):
             if archive.testzip() or archive.read("Metadata/project_settings.config") != settings:
                 raise ValueError(f"Damaged archive or unexpected printer profile in {kit}")
             model = ET.fromstring(archive.read("3D/3dmodel.model"))
+            if model.findtext("{*}metadata[@name='Title']") != f"{PROJECT_TITLE} - {mounting.replace('_', ' ')}":
+                raise ValueError(f"Incorrect project title in {kit}")
             items = model.findall(".//{*}build/{*}item")
             config = ET.fromstring(archive.read("Metadata/model_settings.config"))
             copies = kwargs.get("basic_set_copies", 5)
@@ -79,10 +82,12 @@ def main(**kwargs):
             if any(dist(a[:2], b[:2]) <= a[2] + b[2] for a, b in combinations(placements, 2)):
                 raise ValueError(f"Overlapping print instances in {kit}")
         with fitz.open(kit / "assembly/assembly_instructions.pdf") as doc:
-            if len(doc) != 8 or any(
+            if len(doc) != 9 or any(
                 abs(page.rect.width - 841.89) > 1 or abs(page.rect.height - 595.28) > 1 for page in doc
             ):
                 raise ValueError(f"Invalid landscape A4 book in {kit}")
+            if PROJECT_ID not in doc[0].get_text() or "Capture an M6 bolt head" not in doc[4].get_text():
+                raise ValueError(f"Incorrect cover or missing bolt-head guide in {kit}")
     for page in root.rglob("README.md"):
         for href in re.findall(r"\]\(([^)]+)\)", page.read_text(encoding="utf-8")):
             path = href.partition("#")[0]

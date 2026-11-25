@@ -6,10 +6,9 @@ import shutil
 from pathlib import Path
 from filecmp import cmp
 
-from working_oomp_populate import assembly_steps, example_steps, get_mountings, get_usage
+from working_oomp_populate import PROJECT_ID, PROJECT_TITLE, assembly_steps, example_steps, get_mountings, get_usage
 
 NOTICE = "AI-generated CAD images and instructions. Errors possible."
-PROJECT = "OOBB cosmetic nut and screw adapters"
 
 
 def link(folder, target):
@@ -61,6 +60,7 @@ def main(**kwargs):
         d = record["oobb_details"]
         key = (d["mounting"], d["size"], d["fastener_type"])
         pairs.setdefault(key, {})[d["oobb_type"]] = record
+    backing_folder = root / "parts" / pairs["to_flat", "m3", "nut"]["adapter"]["oomp_id"]
     for record in records:
         d = record["oobb_details"]
         mounting = d["mounting"]
@@ -103,6 +103,13 @@ def main(**kwargs):
             ]
             steps = assembly_steps(details=adapter["oobb_details"], example=example)
             lines.extend(f"{i}. {step}" for i, step in enumerate(steps, 1))
+            if d["fastener_type"] == "countersunk":
+                lines.extend(["", f"[Print the flat M3 backing adapter]({ref(backing_folder / '3dpr.stl')})."])
+            if "bolt_head_seat" in example:
+                lines.extend([
+                    "", "## Using an M6 hex-head bolt", "", example["bolt_head_seat"], "",
+                    f"![M6 bolt head above and seated in the nut adapter]({ref(view.with_name('bolt_head.png'))})",
+                ])
             lines.extend(
                 [
                     "",
@@ -123,7 +130,9 @@ def main(**kwargs):
     for branch, children in branches.items():
         crumbs = branch.relative_to(navigation).parts
         path_label = " / ".join(taxonomy_label(word) for word in crumbs)
-        lines = [f"# {path_label or PROJECT}", "", "Choose a category to see the available parts.", ""]
+        lines = [f"# {path_label or PROJECT_TITLE}", "", "Choose a category to see the available parts.", ""]
+        if crumbs[-2:] == ("m6", "nut"):
+            lines.extend(["This pocket accepts an M6 hex nut or an M6 hex-head bolt measuring 10 mm across the flats. The same cap covers either.", ""])
         for child in sorted(children):
             lines.append(f"- [{taxonomy_label(child)}]({child}/)")
         if crumbs:
@@ -132,10 +141,12 @@ def main(**kwargs):
         write_page(branch / "README.md", lines)
 
     root_lines = [
-        "# " + PROJECT,
+        "# " + PROJECT_TITLE,
         "",
         "These printable adapters seat a countersunk screw, wood screw or hex nut on an OOBB part. "
         "A plain 14 mm cap covers the fastener and follows the width of a single OOBB strip.",
+        "",
+        f"Project repository: [{PROJECT_ID}](https://github.com/oomlout/{PROJECT_ID}).",
         "",
         "Adapted from [Oomlout’s original hardware screw and nut adapters](https://github.com/oomlout/oomlout_oobb_hardware_screw_nut_adapter).",
         "",
@@ -169,7 +180,7 @@ def main(**kwargs):
             "",
             "![Exploded screw and bolt assemblies](exploded.png)",
             "",
-            "Left: M3 countersunk screw, wide washer and nut. Right: M6 hex nut and hex-head bolt. The yellow caps fit over the black adapters.",
+            "Left: M3 countersunk screw with a second black adapter holding the M3 nut behind the plate. Right: M6 nut seated in its adapter, with the bolt entering from below.",
             "",
             "[Open the 40-piece P1S project](working.3mf) · [Assembly booklet (PDF)](assembly/assembly_instructions.pdf) · "
             "[Standalone HTML guide](assembly/assembly_instructions.html)",
@@ -187,16 +198,20 @@ def main(**kwargs):
             for kind in ("adapter", "cap"):
                 r = pair[kind]
                 columns.append(f"[{r['oobb_details']['depth']:g} mm]({link(kit,root/'parts'/r['oomp_id'])})")
-            lines.append(f"| {example['label']} | " + " | ".join(columns) + " |")
+            fastener_label = "M6 hex nut or hex-head bolt" if "bolt_head_seat" in example else example["label"]
+            lines.append(f"| {fastener_label} | " + " | ".join(columns) + " |")
         lines.extend(
             [
                 "",
                 "## Assembly",
                 "",
-                "The worked example uses an M3 × 8 mm countersunk screw, M3 nut and 9 mm OD washer on a 3 mm OOBB plate.",
+                "The worked example uses an M3 × 10 mm countersunk screw and a nut captured in a flat M3 nut adapter behind a 3 mm plate.",
                 "",
             ]
         )
+        backing_note = ("Use one from this set." if mounting == "to_flat" else
+                        "Print this extra flat adapter for the back. Two opposed locating sleeves would meet inside the 3 mm plate.")
+        lines.extend([f"[Flat M3 nut adapter STL]({link(kit, backing_folder / '3dpr.stl')}). {backing_note}", ""])
         for n, (heading, action) in enumerate(example_steps(mounting=mounting), 1):
             lines.extend([f"**{n}. {heading}.** {action}", "", f"![{heading}](assembly/step_{n}.png)", ""])
         lines.extend(["## Other fasteners", ""])
@@ -214,6 +229,11 @@ def main(**kwargs):
                         "",
                     ]
                 )
+                if "bolt_head_seat" in example:
+                    lines.extend([
+                        "#### Capturing the bolt head", "", example["bolt_head_seat"], "",
+                        f"![M6 hex-head bolt exploded and seated]({link(kit, target/'bolt_head.png')})", "",
+                    ])
         lines.extend(
             [
                 "## Print and fit",
@@ -241,7 +261,13 @@ def main(**kwargs):
             "",
             "![Exploded screw and bolt joints on a teal 3 × 3 plate](output/basic_set_to_m6/exploded.png)",
             "",
-            "The left joint uses an M3 countersunk screw, washer and nut. The right joint uses an M6 hex-head bolt and nut. Both yellow caps fit over the black adapters.",
+            f"The left joint uses an M3 countersunk screw and a [flat M3 nut adapter]({link(root, backing_folder)}) on the back of the plate. The right joint captures the M6 nut.",
+            "",
+            "### Using the M6 nut adapter for a bolt head",
+            "",
+            examples["m6", "nut"]["bolt_head_seat"],
+            "",
+            f"![Exploded and seated M6 bolt heads in the same adapter]({link(root, root/'parts'/pairs['to_flat', 'm6', 'nut']['adapter']['oomp_id']/'bolt_head.png')})",
             "",
             "[Browse individual printable parts by taxonomy](navigation_oobb/oobb/part/cosmetic/) · [Full-detail CAD sources](source_file/README.md)",
             "",

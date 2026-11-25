@@ -6,7 +6,7 @@ A flat underside bears directly on the mounting surface. Centre the adapter by h
 
 ![Exploded screw and bolt assemblies](exploded.png)
 
-Left: M3 countersunk screw, wide washer and nut. Right: M6 hex nut and hex-head bolt. The yellow caps fit over the black adapters.
+Left: M3 countersunk screw with a second black adapter holding the M3 nut behind the plate. Right: M6 nut seated in its adapter, with the bolt entering from below.
 
 [Open the 40-piece P1S project](working.3mf) · [Assembly booklet (PDF)](assembly/assembly_instructions.pdf) · [Standalone HTML guide](assembly/assembly_instructions.html)
 
@@ -16,22 +16,24 @@ The plate contains five adapters and five caps for each row below. To recolour o
 | --- | ---: | ---: |
 | M3 countersunk screw | [1.9 mm](../../parts/oobb_part_cosmetic_adapter_m3_countersunk_12_mm_diameter_1_9_mm_depth_to_flat/) | [2.9 mm](../../parts/oobb_part_cosmetic_cap_m3_countersunk_14_mm_diameter_2_9_mm_depth_to_flat/) |
 | M3 hex nut | [4.5 mm](../../parts/oobb_part_cosmetic_adapter_m3_nut_12_mm_diameter_4_5_mm_depth_to_flat/) | [5.5 mm](../../parts/oobb_part_cosmetic_cap_m3_nut_14_mm_diameter_5_5_mm_depth_to_flat/) |
-| M6 hex nut | [7 mm](../../parts/oobb_part_cosmetic_adapter_m6_nut_12_mm_diameter_7_mm_depth_to_flat/) | [8 mm](../../parts/oobb_part_cosmetic_cap_m6_nut_14_mm_diameter_8_mm_depth_to_flat/) |
+| M6 hex nut or hex-head bolt | [7 mm](../../parts/oobb_part_cosmetic_adapter_m6_nut_12_mm_diameter_7_mm_depth_to_flat/) | [8 mm](../../parts/oobb_part_cosmetic_cap_m6_nut_14_mm_diameter_8_mm_depth_to_flat/) |
 | 3.5 mm wood screw | [4.2 mm](../../parts/oobb_part_cosmetic_adapter_m3_5_screw_wood_12_mm_diameter_4_2_mm_depth_to_flat/) | [5.2 mm](../../parts/oobb_part_cosmetic_cap_m3_5_screw_wood_14_mm_diameter_5_2_mm_depth_to_flat/) |
 
 ## Assembly
 
-The worked example uses an M3 × 8 mm countersunk screw, M3 nut and 9 mm OD washer on a 3 mm OOBB plate.
+The worked example uses an M3 × 10 mm countersunk screw and a nut captured in a flat M3 nut adapter behind a 3 mm plate.
 
-**1. Back the clearance hole.** Hold the 9 mm outside-diameter M3 washer and M3 nut under the centre hole of the plate.
+[Flat M3 nut adapter STL](../../parts/oobb_part_cosmetic_adapter_m3_nut_12_mm_diameter_4_5_mm_depth_to_flat/3dpr.stl). Use one from this set.
 
-![Back the clearance hole](assembly/step_1.png)
+**1. Seat the backing nut.** Seat an M3 nut in a To flat M3 nut adapter. Hold the flat underside against the back of the plate, with the nut pocket facing out.
+
+![Seat the backing nut](assembly/step_1.png)
 
 **2. Locate the adapter.** Centre the adapter over the clearance hole with the conical seat facing up.
 
 ![Locate the adapter](assembly/step_2.png)
 
-**3. Seat the screw.** Pass the M3 x 8 mm countersunk screw through the adapter and washer. Engage the nut and tighten until the head is recessed.
+**3. Seat the screw.** Pass the M3 × 10 mm countersunk screw through the front adapter and plate. Thread it into the captured nut and tighten until the head is recessed.
 
 ![Seat the screw](assembly/step_3.png)
 
@@ -43,7 +45,7 @@ The worked example uses an M3 × 8 mm countersunk screw, M3 nut and 9 mm OD wash
 
 ### M3 hex nut
 
-Align the nut flats with the pocket and press the nut onto its floor. Thread an M3 screw in from the reverse side. The illustrated 8 mm screw uses a 9 mm OD, 0.8 mm thick washer under its head on a 3 mm plate.
+Align the M3 nut with the hex pocket and seat it against the floor. Insert the M3 screw from the other face of the plate and tighten. If you cap the nut side, check the screw tip clears the roof.
 
 [![M3 hex nut installation](../../parts/oobb_part_cosmetic_adapter_m3_nut_12_mm_diameter_4_5_mm_depth_to_flat/installation.png)](../../parts/oobb_part_cosmetic_adapter_m3_nut_12_mm_diameter_4_5_mm_depth_to_flat/)
 
@@ -52,6 +54,12 @@ Align the nut flats with the pocket and press the nut onto its floor. Thread an 
 Seat the hex nut in the pocket and thread an M6 screw in from below. The pocket is 5 mm deep. The 5.2 mm example nut stands 0.2 mm proud and lifts the cap by that amount.
 
 [![M6 hex nut installation](../../parts/oobb_part_cosmetic_adapter_m6_nut_12_mm_diameter_7_mm_depth_to_flat/installation.png)](../../parts/oobb_part_cosmetic_adapter_m6_nut_12_mm_diameter_7_mm_depth_to_flat/)
+
+#### Capturing the bolt head
+
+The same M6 nut adapter also captures an M6 hex-head bolt with a 10 mm head across the flats. Feed the shank through the pocket and plate, align the head flats and seat the head. Tighten an M6 nut on the reverse side and press the cap over the bolt head.
+
+![M6 hex-head bolt exploded and seated](../../parts/oobb_part_cosmetic_adapter_m6_nut_12_mm_diameter_7_mm_depth_to_flat/bolt_head.png)
 
 ### 3.5 mm wood screw
 

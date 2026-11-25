@@ -1,5 +1,8 @@
 """Editable dimensions for the cosmetic adapters and their over-caps, in millimetres."""
 
+PROJECT_ID = "oomlout_oobb_part_cosmetic_nut_screw_adapter_version_5"
+PROJECT_TITLE = "OOBB cosmetic nut and screw adapters (Version 5)"
+
 
 def get_fasteners(**kwargs):
     # Dimensions from the original 12 mm, flat, 3dpr models.
@@ -85,20 +88,22 @@ def get_usage(**kwargs):
     examples = {}
     examples[("m3", "countersunk")] = {
         "label": "M3 countersunk screw",
-        "hardware": "hardware_screw_countersunk_pozidriv_bright_zinc_plated_m3_diameter_8_mm_length",
+        "hardware": "hardware_screw_countersunk_pozidriv_bright_zinc_plated_m3_diameter_10_mm_length",
         "counterpart": "hardware_nut_m3",
-        "seat": "Pass the countersunk screw through the conical seat. Back the plate’s clearance hole with a wide M3 washer and nut. Tighten until the head sits below the rim.",
+        "seat": "Seat an M3 nut in a To flat M3 nut adapter. Hold its flat underside against the back of the plate, pocket facing out. Pass the M3 × 10 mm countersunk screw through the front adapter and plate into the nut. Tighten until the head sits below the rim.",
     }
     examples[("m3", "nut")] = {
         "label": "M3 hex nut",
         "hardware": "hardware_nut_m3",
         "counterpart": "hardware_set_screw_m3_8_mm_length",
-        "seat": "Align the nut flats with the pocket and press the nut onto its floor. Thread an M3 screw in from the reverse side. The illustrated 8 mm screw uses a 9 mm OD, 0.8 mm thick washer under its head on a 3 mm plate.",
+        "seat": "Align the M3 nut with the hex pocket and seat it against the floor. Insert the M3 screw from the other face of the plate and tighten. If you cap the nut side, check the screw tip clears the roof.",
     }
     examples[("m6", "nut")] = {
         "label": "M6 hex nut",
         "hardware": "hardware_nut_m6",
         "counterpart": "hardware_set_screw_m6_8_mm_length",
+        "bolt_head_example": "hardware_set_screw_m6_12_mm_length",
+        "bolt_head_seat": "The same M6 nut adapter also captures an M6 hex-head bolt with a 10 mm head across the flats. Feed the shank through the pocket and plate, align the head flats and seat the head. Tighten an M6 nut on the reverse side and press the cap over the bolt head.",
         "seat": "Seat the hex nut in the pocket and thread an M6 screw in from below. The pocket is 5 mm deep. The 5.2 mm example nut stands 0.2 mm proud and lifts the cap by that amount.",
     }
     examples[("m3_5", "screw_wood")] = {
@@ -144,8 +149,8 @@ def get_mountings(**kwargs):
 def example_steps(**kwargs):
     mounting = kwargs["mounting"]
     steps = []
-    steps.append(("Back the clearance hole", "Hold the 9 mm outside-diameter M3 washer and M3 nut under the centre hole of the plate."))
+    steps.append(("Seat the backing nut", "Seat an M3 nut in a To flat M3 nut adapter. Hold the flat underside against the back of the plate, with the nut pocket facing out."))
     steps.append(("Locate the adapter", get_mountings()[mounting]["locate"]))
-    steps.append(("Seat the screw", "Pass the M3 x 8 mm countersunk screw through the adapter and washer. Engage the nut and tighten until the head is recessed."))
+    steps.append(("Seat the screw", "Pass the M3 × 10 mm countersunk screw through the front adapter and plate. Thread it into the captured nut and tighten until the head is recessed."))
     steps.append(("Fit the cap", "Press the open end of the matching cap over the flange until its rim meets the plate."))
     return steps

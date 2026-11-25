@@ -9,6 +9,7 @@ from tempfile import TemporaryDirectory
 
 import trimesh
 import numpy as np
+from PIL import Image
 
 from working_oomp_populate import get_usage
 
@@ -31,6 +32,8 @@ def main(**kwargs):
         expected.append(folder / "studio.png")
         if record["taxonomy_4"] == "adapter":
             expected.append(folder / "installation.png")
+            if record["taxonomy_5"] == "m6" and record["taxonomy_6"] == "nut":
+                expected.append(folder / "bolt_head.png")
     for mounting in ("to_flat", "to_m6"):
         folder = root / "output" / f"basic_set_{mounting}"
         expected.append(folder / "assembled.png")
@@ -42,8 +45,18 @@ def main(**kwargs):
         digest.update(file.read_bytes())
     key = digest.hexdigest()
     stamp = root / "output" / ".render.sha256"
-    if stamp.is_file() and stamp.read_text().strip() == key and all(f.is_file() for f in expected):
-        return
+    def check_images():
+        for file in expected:
+            with Image.open(file) as image:
+                image.verify()
+
+    if stamp.is_file() and stamp.read_text().strip() == key:
+        try:
+            check_images()
+        except (OSError, SyntaxError):
+            pass
+        else:
+            return
     if not blender:
         raise FileNotFoundError("Install Blender and put blender on PATH to regenerate the studio views.")
     with TemporaryDirectory() as temporary:
@@ -76,6 +89,5 @@ def main(**kwargs):
         manifest = workspace / "job.json"
         manifest.write_text(json.dumps(job), encoding="utf-8")
         subprocess.run([blender, "-b", "--python-exit-code", "1", "-P", str(script), "--", str(manifest)], check=True)
-    if not all(f.is_file() for f in expected):
-        raise RuntimeError("Blender did not produce the complete catalogue and assembly views")
+    check_images()
     stamp.write_text(key + "\n")

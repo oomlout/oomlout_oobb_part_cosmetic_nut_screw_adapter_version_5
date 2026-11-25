@@ -1,6 +1,8 @@
-# OOBB cosmetic nut and screw adapters
+# OOBB cosmetic nut and screw adapters (Version 5)
 
 These printable adapters seat a countersunk screw, wood screw or hex nut on an OOBB part. A plain 14 mm cap covers the fastener and follows the width of a single OOBB strip.
+
+Project repository: [oomlout_oobb_part_cosmetic_nut_screw_adapter_version_5](https://github.com/oomlout/oomlout_oobb_part_cosmetic_nut_screw_adapter_version_5).
 
 Adapted from [Oomlout’s original hardware screw and nut adapters](https://github.com/oomlout/oomlout_oobb_hardware_screw_nut_adapter).
 
@@ -25,7 +27,13 @@ Each editable Bambu Studio project contains five of each of the four adapters an
 
 ![Exploded screw and bolt joints on a teal 3 × 3 plate](output/basic_set_to_m6/exploded.png)
 
-The left joint uses an M3 countersunk screw, washer and nut. The right joint uses an M6 hex-head bolt and nut. Both yellow caps fit over the black adapters.
+The left joint uses an M3 countersunk screw and a [flat M3 nut adapter](parts/oobb_part_cosmetic_adapter_m3_nut_12_mm_diameter_4_5_mm_depth_to_flat/) on the back of the plate. The right joint captures the M6 nut.
+
+### Using the M6 nut adapter for a bolt head
+
+The same M6 nut adapter also captures an M6 hex-head bolt with a 10 mm head across the flats. Feed the shank through the pocket and plate, align the head flats and seat the head. Tighten an M6 nut on the reverse side and press the cap over the bolt head.
+
+![Exploded and seated M6 bolt heads in the same adapter](parts/oobb_part_cosmetic_adapter_m6_nut_12_mm_diameter_7_mm_depth_to_flat/bolt_head.png)
 
 [Browse individual printable parts by taxonomy](navigation_oobb/oobb/part/cosmetic/) · [Full-detail CAD sources](source_file/README.md)
 

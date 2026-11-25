@@ -1,7 +1,7 @@
 name,quantity,id,md5_6_alpha,source
 M3 countersunk adapter,1,oobb_part_cosmetic_adapter_m3_countersunk_12_mm_diameter_4_9_mm_depth_to_m6,,
 M3 countersunk cap,1,oobb_part_cosmetic_cap_m3_countersunk_14_mm_diameter_2_9_mm_depth_to_m6,,
+To flat M3 nut adapter,1,oobb_part_cosmetic_adapter_m3_nut_12_mm_diameter_4_5_mm_depth_to_flat,,
 "3 x 3 OOBB plate, 3 mm",1,oobb_part_plate_basic_3_width_3_height_3_depth,,
-M3 x 8 mm countersunk PZ,1,hardware_screw_countersunk_pozidriv_bright_zinc_plated_m3_diameter_8_mm_length,2zrf2,https://github.com/oomlout/oomp_hardware_screw_version_5/tree/main/parts/hardware_screw_countersunk_pozidriv_bright_zinc_plated_m3_diameter_8_mm_length
-"M3 wide washer, 9 mm OD",1,hardware_washer_m3_penny,5mz1q,https://github.com/oomlout/oomp_hardware_bolt_version_5/tree/main/parts/hardware_washer_m3_penny
+M3 x 10 mm countersunk PZ,1,hardware_screw_countersunk_pozidriv_bright_zinc_plated_m3_diameter_10_mm_length,17itp,https://github.com/oomlout/oomp_hardware_screw_version_5/tree/main/parts/hardware_screw_countersunk_pozidriv_bright_zinc_plated_m3_diameter_10_mm_length
 M3 hex nut,1,hardware_nut_m3,3vb5b,https://github.com/oomlout/oomp_hardware_bolt_version_5/tree/main/parts/hardware_nut_m3
