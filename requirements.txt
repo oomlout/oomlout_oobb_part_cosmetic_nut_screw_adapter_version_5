@@ -1,0 +1,6 @@
+PyYAML>=6,<7
+trimesh>=4.6,<6
+scipy>=1.10
+Pillow>=9.1
+reportlab>=4
+PyMuPDF>=1.24

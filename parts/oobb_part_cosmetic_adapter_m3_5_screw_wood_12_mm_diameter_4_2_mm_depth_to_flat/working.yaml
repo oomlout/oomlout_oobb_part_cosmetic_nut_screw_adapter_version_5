@@ -1,0 +1,24 @@
+taxonomy_1: oobb
+taxonomy_2: part
+taxonomy_3: cosmetic
+taxonomy_4: adapter
+taxonomy_5: m3_5
+taxonomy_6: screw_wood
+taxonomy_7: 12_mm_diameter
+taxonomy_8: 4_2_mm_depth
+taxonomy_9: to_flat
+oomp_id: oobb_part_cosmetic_adapter_m3_5_screw_wood_12_mm_diameter_4_2_mm_depth_to_flat
+oobb_details:
+  size: m3_5
+  fastener_type: screw_wood
+  seat_depth: 4.2
+  seat_radius: 4.5
+  bore_radius: 2.375
+  base_depth: 0
+  mounting: to_flat
+  oobb_type: adapter
+  diameter: 12
+  body_depth: 4.2
+  sleeve_depth: 0
+  sleeve_diameter: 5.75
+  depth: 4.2

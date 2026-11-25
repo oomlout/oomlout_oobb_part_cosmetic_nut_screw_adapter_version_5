@@ -1,0 +1,24 @@
+taxonomy_1: oobb
+taxonomy_2: part
+taxonomy_3: cosmetic
+taxonomy_4: adapter
+taxonomy_5: m3
+taxonomy_6: nut
+taxonomy_7: 12_mm_diameter
+taxonomy_8: 4_5_mm_depth
+taxonomy_9: to_flat
+oomp_id: oobb_part_cosmetic_adapter_m3_nut_12_mm_diameter_4_5_mm_depth_to_flat
+oobb_details:
+  size: m3
+  fastener_type: nut
+  seat_depth: 2.5
+  seat_radius: 3.462
+  bore_radius: 1.8
+  base_depth: 2
+  mounting: to_flat
+  oobb_type: adapter
+  diameter: 12
+  body_depth: 4.5
+  sleeve_depth: 0
+  sleeve_diameter: 5.75
+  depth: 4.5

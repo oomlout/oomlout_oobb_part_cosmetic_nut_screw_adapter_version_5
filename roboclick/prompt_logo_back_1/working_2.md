@@ -1,1 +1,0 @@
-Awesome, populate that prompt for {animal} please, take all the time you need.

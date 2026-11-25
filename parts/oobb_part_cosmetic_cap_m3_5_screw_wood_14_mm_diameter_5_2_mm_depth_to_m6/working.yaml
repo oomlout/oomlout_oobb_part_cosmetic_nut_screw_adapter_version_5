@@ -1,0 +1,20 @@
+taxonomy_1: oobb
+taxonomy_2: part
+taxonomy_3: cosmetic
+taxonomy_4: cap
+taxonomy_5: m3_5
+taxonomy_6: screw_wood
+taxonomy_7: 14_mm_diameter
+taxonomy_8: 5_2_mm_depth
+taxonomy_9: to_m6
+oomp_id: oobb_part_cosmetic_cap_m3_5_screw_wood_14_mm_diameter_5_2_mm_depth_to_m6
+oobb_details:
+  size: m3_5
+  fastener_type: screw_wood
+  mounting: to_m6
+  oobb_type: cap
+  diameter: 14
+  depth: 5.2
+  wall_thickness: 1
+  roof_thickness: 1
+  fit_taper: 0.075

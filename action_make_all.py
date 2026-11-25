@@ -1,29 +1,31 @@
-"""Populate parts and run SCAD, SolidCraft and the existing project actions."""
+"""Regenerate the complete catalogue from the editable populate definitions."""
+
+from pathlib import Path
+
+import working_navigation
+import working_basic_set
+import working_oomp
+import working_oomp_populate
+import working_scad
+import working_render
+import working_manual
+import working_validate
+
 
 def main(**kwargs):
-    kwargs["run_oomp_populate"] = True
+    kwargs.setdefault("root", Path(__file__).resolve().parent)
 
-    kwargs["run_oomp"] = True
+    options = working_oomp_populate.main(**kwargs)
+    records = working_oomp.main(options=options, **kwargs)
+    working_scad.main(records=records, **kwargs)
+    for mounting in ("to_flat", "to_m6"):
+        working_basic_set.main(records=records, mounting=mounting, **kwargs)
+    working_render.main(records=records, **kwargs)
+    working_manual.main(records=records, **kwargs)
+    working_navigation.main(records=records, **kwargs)
+    working_validate.main(records=records, **kwargs)
+    print(f"Validated {len(records)} catalogue entries, both P1S plates and both assembly guides.")
 
-    kwargs["run_action"] = True
-    #kwargs["run_action"] = False
 
-    kwargs["run_scad"] = True
-    # True: native recipe; False: off; "working_scad": share SCAD definitions.
-    kwargs.setdefault("run_solidcraft", "working_scad")
-
-    kwargs["run_svg"] = True
-
-    kwargs["generate_stl"] = True
-
-    # Rebuild native CAD and all selected exports from the recipe every run.
-    kwargs["export_extras"] = kwargs.get("export_extras", True)  # STEP and PNG previews.
-    kwargs["export_stl"] = kwargs.get("export_stl", True)
-    kwargs["verify_solidcraft"] = kwargs.get("verify_solidcraft", False)
-
-    import working
-    working.run(**kwargs)
-
-if __name__ == '__main__':
-    kwargs = {}
-    main(**kwargs)
+if __name__ == "__main__":
+    main()

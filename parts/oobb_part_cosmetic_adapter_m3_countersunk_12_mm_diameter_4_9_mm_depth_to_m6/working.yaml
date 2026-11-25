@@ -1,0 +1,24 @@
+taxonomy_1: oobb
+taxonomy_2: part
+taxonomy_3: cosmetic
+taxonomy_4: adapter
+taxonomy_5: m3
+taxonomy_6: countersunk
+taxonomy_7: 12_mm_diameter
+taxonomy_8: 4_9_mm_depth
+taxonomy_9: to_m6
+oomp_id: oobb_part_cosmetic_adapter_m3_countersunk_12_mm_diameter_4_9_mm_depth_to_m6
+oobb_details:
+  size: m3
+  fastener_type: countersunk
+  seat_depth: 1.9
+  seat_radius: 3.6
+  bore_radius: 1.8
+  base_depth: 0
+  mounting: to_m6
+  oobb_type: adapter
+  diameter: 12
+  body_depth: 1.9
+  sleeve_depth: 3
+  sleeve_diameter: 5.75
+  depth: 4.9

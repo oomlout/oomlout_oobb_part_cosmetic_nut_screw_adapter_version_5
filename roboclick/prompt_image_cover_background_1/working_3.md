@@ -1,1 +1,0 @@
-please geenrate a version 2 of the prompt make it better in every regard

@@ -1,0 +1,20 @@
+taxonomy_1: oobb
+taxonomy_2: part
+taxonomy_3: cosmetic
+taxonomy_4: cap
+taxonomy_5: m6
+taxonomy_6: nut
+taxonomy_7: 14_mm_diameter
+taxonomy_8: 8_mm_depth
+taxonomy_9: to_m6
+oomp_id: oobb_part_cosmetic_cap_m6_nut_14_mm_diameter_8_mm_depth_to_m6
+oobb_details:
+  size: m6
+  fastener_type: nut
+  mounting: to_m6
+  oobb_type: cap
+  diameter: 14
+  depth: 8
+  wall_thickness: 1
+  roof_thickness: 1
+  fit_taper: 0.075

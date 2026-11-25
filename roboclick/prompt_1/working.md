@@ -1,1 +1,0 @@
-This is a fun prompt yay inside the prompt_1 folder in prompt folder!
